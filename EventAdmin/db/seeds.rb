@@ -11,3 +11,7 @@ Event.create(title: "Botcamp Js", description: "curso intensivo de javascript", 
 
 Event.create(title: "Botcamp RoR", description: "curso intensivo de Ruby on Rails", init_date: "2023-06-29", cost: "800", location: "Manzanillo")
 
+Event.create(title: "Botcamp Js", description: "curso intensivo de javascript", init_date: "2023-06-27", cost: "500", location: "Colima")
+
+Event.create(title: "Botcamp RoR", description: "curso intensivo de Ruby on Rails", init_date: "2023-06-29", cost: "800", location: "Manzanillo")
+

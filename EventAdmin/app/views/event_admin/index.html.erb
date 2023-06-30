@@ -1,10 +1,39 @@
-<% @event_list.each do |event| %>
- <h1> <%= event.title %></h1>
-  <%= event.description %>
-  <%= event.init_date %>
-  <%= event.cost %>
-  <%= event.location %>
-<% end %>
+<section class="hero is-link">
+  <div class="hero-body">
+    <button class="button is-success is-pulled-right">Button</button>
+    <h1 class="title">
+      BrightCoders Events 
+    </h1>
+  </div>
+</section>
+<section></section>
+</section>
+<br>
+<div class="card-columns">
+  <% @event_list.each do |event| %>
+    <div class="card">
+     <header class="card-header">
+        <p class="card-header-title">
+          <%= event.title %>
+        </p>
+      </header>
+      <div class="card-content">
+        <div class="content">
+          <%= event.description %>
+          <br>
+          <%= event.init_date %>
+          <br>
+          <%= event.cost %>
+          <br>
+          <%= event.location %>
+        </div>
+      </div>
+      <footer class="card-footer">
+        <a href="#" class="card-footer-item">Editar</a>
+         <a> <%= link_to "Eliminar", "/events/" + event.id.to_s %> </a>
+      </footer>
+    </div>
+  <% end %>
+</div>
 
-<%=  %>
 

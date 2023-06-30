@@ -3,5 +3,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
-  get '/events', to: 'event_admin#index', as: :event_list
+  get '/home', to: 'pages#home'
+  get '/events', to: 'event_admin#index', as: 'events'
+  get '/events/:id', to: 'event_admin#destroy'
 end
