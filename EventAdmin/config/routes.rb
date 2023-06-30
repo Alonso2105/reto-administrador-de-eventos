@@ -8,4 +8,12 @@ Rails.application.routes.draw do
   get '/home', to: 'pages#home'
   get '/events', to: 'event_admin#index', as: 'events'
   get '/events/:id', to: 'event_admin#destroy'
+  
+  # routes.rb
+  #create
+  #update
+  delete '/events/:id', to: 'event_admin#destroy', as: 'delete_event'
+
+  
+
 end
