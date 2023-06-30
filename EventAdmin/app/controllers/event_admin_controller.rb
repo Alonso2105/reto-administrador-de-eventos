@@ -3,14 +3,14 @@
 # class EventAdminController
 class EventAdminController < ApplicationController
   def index
-    @event_list = Event.all
+    @events = Event.all
   end
 
   def create
-    @event = Event.new(event_param)
+    @event = Event.new(event_params)
 
     if @event.save
-      redirect_to event_path, notice: 'evento guardado'
+      redirect_to event_path, notice: 'Evento Registrado'
     else
       render new
     end
@@ -20,7 +20,7 @@ class EventAdminController < ApplicationController
     @event = event_find
 
     if @event.destroy
-      redirect_to events_path, notice: 'Usuario Eliminado'
+      redirect_to events_path, notice: 'Evento Eliminado'
     else
       redirect_to events_path, notice: 'Error'
     end
@@ -28,7 +28,7 @@ class EventAdminController < ApplicationController
 
   private
 
-  def event_param
+  def event_params
     params.permit(:title, :description, :init_date, :cost, :location)
   end
 
