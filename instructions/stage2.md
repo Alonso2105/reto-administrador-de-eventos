@@ -1,4 +1,4 @@
-![BrightCoders Logo](img/logo.png)
+![BrightCoders Logo](../img/logo.png)
 
 # 🥷 Reto de Programación
 
