@@ -1,7 +1,7 @@
 <section class="hero is-link">
   <div class="hero-body">
     <%= link_to "back", home_path, class:"button is-success is-pulled-right back-button" %>
-    <button class="button is-success is-pulled-right">Add Event</button>
+    <%= link_to "Add Event", new_event_path, class:"button is-success is-pulled-right" %>
     <h1 class="title">
       BrightCoders Events 
     </h1>
@@ -39,8 +39,8 @@
         </div>
       </div>
       <footer class="card-footer">
-         <a href="#" class="card-footer-item">Edit</a>
-         <a href="<%= delete_event_path(event.id) %>" class="card-footer-item">Delete</a>
+         <%= link_to "edit", edit_event_path(event.id), class:"card-footer-item" %>
+         <%= link_to "delete", delete_path(event.id), class:"card-footer-item" %>
       </footer>
     </div>
   <% end %>
