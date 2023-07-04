@@ -26,14 +26,14 @@ class EventAdminController < ApplicationController
 
   def update
     @event = Event.find(params[:id])
-  
+
     if @event.update(event_params)
       redirect_to events_path, notice: 'Evento actualizado'
     else
       render :edit
     end
   end
-  
+
   def destroy
     @event = event_find
 
@@ -48,9 +48,9 @@ class EventAdminController < ApplicationController
 
   def event_params
     params.require(:event).permit(:title, :description, :init_date, :cost, :location)
-  end  
+  end
 
   def event_find
-    return @event = Event.find(params[:id])
-  end  
+    @event = Event.find(params[:id])
+  end
 end
