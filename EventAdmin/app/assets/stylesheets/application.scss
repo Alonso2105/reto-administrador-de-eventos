@@ -2,9 +2,7 @@
 @import "abstracts/_mixins.scss";
 
 .my-form-container {
-  margin: 20px;
-  margin-left: 150px;
-  margin-right: 150px;
+  margin: 20px 150px;
 }
 
 .card {
@@ -22,6 +20,7 @@
   gap: 20px; /* Espaciado entre las tarjetas */
   margin-inline-end: 25px;
   margin-inline-start: 25px;
+  margin-top: 5px;
 }
 .card-header-title {
   background-color: #485fc7;
@@ -29,8 +28,4 @@
 }
 .back-button {
   margin-left: 1rem;
-
-  @include desktop {
-    
-  }
 }
