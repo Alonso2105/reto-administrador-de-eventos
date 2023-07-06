@@ -1,0 +1,47 @@
+<section class="hero is-link">
+  <div class="hero-body">
+    <%= link_to "back", home_path, class:"button is-success is-pulled-right back-button" %>
+    <%= link_to "Add Event", new_event_path, class:"button is-success is-pulled-right" %>
+    <h1 class="title">
+      BrightCoders Events 
+    </h1>
+  </div>
+</section>
+
+<div class="card-columns">
+  <% @events.each do |event| %>
+    <div class="card">
+     <header class="card-header">
+        <p class="card-header-title">
+          <%= event.title %>
+        </p>
+      </header>
+      <div class="card-content">
+        <div class="content">
+          <p>Description:
+              <br>
+             <%= event.description %>
+          </p>
+          <p>Initial Date:
+            <br>
+            <%= event.init_date %>
+          </p>
+          <p>Cost:
+            <br>
+            <%= event.cost %>
+          </p>
+          <p>Location:
+             <br>
+             <%= event.location %>
+          </P>
+        </div>
+      </div>
+      <footer class="card-footer">
+         <%= link_to "edit", edit_event_path(event.id), class:"card-footer-item" %>
+         <%= link_to "delete", delete_path(event.id), class:"card-footer-item" %>
+      </footer>
+    </div>
+  <% end %>
+</div>
+
+
