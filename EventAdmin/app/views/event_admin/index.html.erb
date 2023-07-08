@@ -1,5 +1,10 @@
 <section class="hero is-link">
   <div class="hero-body">
+    <% if user_signed_in? %>
+        <button class="button is-danger is-pulled-right back-button">
+          <%= link_to "Log Out",destroy_user_session_path%>
+        </button>
+    <%end%>
     <%= link_to "back", home_path, class:"button is-success is-pulled-right back-button" %>
     <%= link_to "Add Event", new_event_path, class:"button is-success is-pulled-right" %>
     <h1 class="title">

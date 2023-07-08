@@ -1,8 +1,21 @@
 <section class="hero is-link">
   <div class="hero-body">
+
+      <% if !user_signed_in? %>
       <button class="button is-success is-pulled-right">
-        <%= link_to "Start", events_path %>
+        <%= link_to "Sign In", sign_in_path %>
       </button>
+      <% end %>
+
+      <% if user_signed_in? %>
+        <button class="button is-danger is-pulled-right back-button">
+          <%= link_to "Log Out",destroy_user_session_path%>
+        </button>
+
+        <button class="button is-success is-pulled-right">
+          <%= link_to "Start", events_path %>
+        </button>
+      <% end %>
     <h1 class="title">
       BrightCoders Events 
     </h1>
