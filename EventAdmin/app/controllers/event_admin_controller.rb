@@ -18,7 +18,7 @@ class EventAdminController < ApplicationController
     @event = Event.new(event_params)
 
     if @event.save
-      redirect_to events_path, notice: 'Evento Registrado'
+      redirect_to events_path, notice: 'Registered Event'
     else
       render :new
     end
@@ -28,7 +28,7 @@ class EventAdminController < ApplicationController
     @event = Event.find(params[:id])
 
     if @event.update(event_params)
-      redirect_to events_path, notice: 'Evento actualizado'
+      redirect_to events_path, notice: 'Updated event'
     else
       render :edit
     end
@@ -38,7 +38,7 @@ class EventAdminController < ApplicationController
     @event = event_find
 
     if @event.destroy
-      redirect_to events_path, notice: 'Evento Eliminado'
+      redirect_to events_path, notice: 'Deleted event'
     else
       redirect_to events_path, notice: 'Error'
     end

@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  devise_for :users
 
+  devise_scope :user do
+    get '/login', to: 'devise/sessions#new', as: 'sign_in'
+  end
+  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   # Defines the root path route ("/")
   root 'pages#home', as: 'home'
-
   # Show Events
   get '/events', to: 'event_admin#index', as: 'events'
   # Create Event
