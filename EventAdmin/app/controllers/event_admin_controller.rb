@@ -27,6 +27,10 @@ class EventAdminController < ApplicationController
   def update
     @event = Event.find(params[:id])
 
+    if params[:event][:remove_image].present? && @event.image.attached?
+      @event.image.purge # Eliminar la imagen adjunta
+    end
+    
     if @event.update(event_params)
       redirect_to events_path, notice: 'Updated event'
     else
@@ -44,10 +48,17 @@ class EventAdminController < ApplicationController
     end
   end
 
+  def delete_image
+    @event = Event.find(params[:id])
+    @event.image.purge # Elimina la imagen adjunta
+    redirect_to edit_event_path(@event), notice: 'Image deleted'
+  end
+
+
   private
 
   def event_params
-    params.require(:event).permit(:title, :description, :init_date, :cost, :location)
+    params.require(:event).permit(:title, :description, :init_date, :cost, :location, :image)
   end
 
   def event_find

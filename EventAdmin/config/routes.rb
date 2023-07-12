@@ -22,4 +22,7 @@ Rails.application.routes.draw do
   # Delete Event
   get '/events/:id', to: 'event_admin#destroy'
   delete '/events/:id', to: 'event_admin#destroy', as: 'delete'
+
+  # Delete Image
+  get '/events/:id/delete_image', to: 'event_admin#delete_image', as: 'delete_image'
 end

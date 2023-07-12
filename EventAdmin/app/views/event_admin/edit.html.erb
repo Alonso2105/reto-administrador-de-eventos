@@ -1,5 +1,5 @@
 <div class="my-form-container">
-       <%= form_for @event, url: { action: "update" }, html: { class: "my-form" } do |f| %>
+       <%= form_for @event, url: { action: "update" }, html: { class: "my-form" }, html: {multipart: true} do |f| %>
       <div class="field">
       <%= f.label :title, class: "label" %>
       <div class="control">
@@ -33,6 +33,17 @@
       <div class="control">
         <%= f.text_field :location, class: "input", placeholder: "Location", required: true %>
       </div>
+    </div>
+
+    <div class="field">
+      <%= f.label :image, class: "label" %>
+      <div class="control">
+        <%= f.file_field :image, class: "input" %>
+      </div>
+      <% if @event.image.attached? %>
+        <%= f.check_box :remove_image %>
+        <%= f.label :remove_image, "Remove Image" %>
+      <% end %>
     </div>
 
     <%= f.submit "Update", class: "button is-primary" %>
