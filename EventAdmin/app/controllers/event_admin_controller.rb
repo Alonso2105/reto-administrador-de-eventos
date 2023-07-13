@@ -3,7 +3,11 @@
 # class EventAdminController
 class EventAdminController < ApplicationController
   def index
-    @events = Event.all
+    @events = Event.where(user_id: current_user.id)
+  end
+
+  def public_events
+    @events = Event.where(public: true)
   end
 
   def new
@@ -58,7 +62,7 @@ class EventAdminController < ApplicationController
   private
 
   def event_params
-    params.require(:event).permit(:title, :description, :init_date, :cost, :location, :image)
+    params.require(:event).permit(:title, :description, :init_date, :cost, :location, :image, :public).merge(user_id: current_user.id)
   end
 
   def event_find

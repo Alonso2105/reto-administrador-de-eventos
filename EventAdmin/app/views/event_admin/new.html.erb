@@ -5,6 +5,10 @@
       <div class="control">
         <%= f.text_field :title, class: "input", placeholder: "Title", required: true %>
       </div>
+      <div class="form-group">
+        <%= f.label :public %>
+        <%= f.check_box :public, class: "switchery" %>
+      </div>
     </div>
     
     <div class="field">
@@ -41,7 +45,7 @@
         <%= f.file_field :image, class: "input" %>
       </div>
     </div>
-
+    
     <%= f.submit "Save", class: "button is-primary" %>
     <%= link_to "back", events_path, class:"button is-success is-pulled-right back-button" %>
   <% end %>
