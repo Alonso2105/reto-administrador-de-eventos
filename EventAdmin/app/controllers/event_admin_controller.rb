@@ -2,6 +2,7 @@
 
 # class EventAdminController
 class EventAdminController < ApplicationController
+  # @events = Event.where(user_id: current_user.id)
   def index
     @events = Event.where(user_id: current_user.id)
   end
@@ -31,9 +32,8 @@ class EventAdminController < ApplicationController
   def update
     @event = Event.find(params[:id])
 
-    if params[:event][:remove_image].present? && @event.image.attached?
-      @event.image.purge # Eliminar la imagen adjunta
-    end
+     # Eliminar la imagen adjunta
+    @event.image.purge if params.dig(:event, :remove_image).present? && @event.image.attached?
     
     if @event.update(event_params)
       redirect_to events_path, notice: 'Updated event'

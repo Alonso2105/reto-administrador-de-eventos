@@ -22,30 +22,20 @@
       </header>
 
       <div class="card-content">
-        <% if event.image.attached? %>
-          <%= image_tag event.image, class: "event-image" %>
-        <% end %>
+        <%= image_tag event.image, class: "event-image" unless event.image.blank? %>
 
         <div class="content">
-          <p>Description:
-              <br>
-             <%= event.description %>
-          </p>
+          <p class="content-tag">Description:</p>  
+          <%= event.description %>
+          
+          <p class="content-tag">Initial Date:</p>
+          <%= event.init_date %>
 
-          <p>Initial Date:
-            <br>
-            <%= event.init_date %>
-          </p>
+          <p class="content-tag">Cost:</p>
+          <%= event.cost %>
 
-          <p>Cost:
-            <br>
-            <%= event.cost %>
-          </p>
-
-          <p>Location:
-             <br>
-             <%= event.location %>
-          </p>
+          <p class="content-tag">Location:</p>
+          <%= event.location %>
         </div>
       </div>
       <footer class="card-footer">
