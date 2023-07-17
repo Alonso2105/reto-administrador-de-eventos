@@ -12,6 +12,11 @@
   .card-footer {
     margin-top: auto;
   }
+
+  .content-tag {
+    margin-bottom: 0 !important;
+    margin-top: 16px;
+  }
 }
 
 .card-columns {
@@ -22,10 +27,12 @@
   margin-inline-start: 25px;
   margin-top: 5px;
 }
+
 .card-header-title {
   background-color: #485fc7;
   color: white;
 }
+
 .back-button {
   margin-left: 1rem;
 }

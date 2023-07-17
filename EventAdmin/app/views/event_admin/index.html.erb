@@ -1,12 +1,11 @@
 <section class="hero is-link">
   <div class="hero-body">
     <% if user_signed_in? %>
-        <button class="button is-danger is-pulled-right back-button">
-          <%= link_to "Log Out",destroy_user_session_path%>
-        </button>
+      <%= link_to "Log Out", destroy_user_session_path, class: "button is-danger is-pulled-right back-button"%>
+      <%= link_to "Back", home_path, class:"button is-warning is-pulled-right back-button" %>
+      <%= link_to "Public Events", public_events_path, class: "button is-success is-pulled-right back-button"%>
+      <%= link_to "Add Event", new_event_path, class:"button is-success is-pulled-right" %>
     <%end%>
-    <%= link_to "back", home_path, class:"button is-success is-pulled-right back-button" %>
-    <%= link_to "Add Event", new_event_path, class:"button is-success is-pulled-right" %>
     <h1 class="title">
       BrightCoders Events 
     </h1>
@@ -21,24 +20,22 @@
           <%= event.title %>
         </p>
       </header>
+
       <div class="card-content">
+        <%= image_tag event.image, class: "event-image" unless event.image.blank? %>
+
         <div class="content">
-          <p>Description:
-              <br>
-             <%= event.description %>
-          </p>
-          <p>Initial Date:
-            <br>
-            <%= event.init_date %>
-          </p>
-          <p>Cost:
-            <br>
-            <%= event.cost %>
-          </p>
-          <p>Location:
-             <br>
-             <%= event.location %>
-          </P>
+          <p class="content-tag">Description:</p>  
+          <%= event.description %>
+          
+          <p class="content-tag">Initial Date:</p>
+          <%= event.init_date %>
+
+          <p class="content-tag">Cost:</p>
+          <%= event.cost %>
+
+          <p class="content-tag">Location:</p>
+          <%= event.location %>
         </div>
       </div>
       <footer class="card-footer">
