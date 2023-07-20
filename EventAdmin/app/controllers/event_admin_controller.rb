@@ -2,9 +2,33 @@
 
 # class EventAdminController
 class EventAdminController < ApplicationController
-  # @events = Event.where(user_id: current_user.id)
   def index
-    @events = Event.where(user_id: current_user.id)
+    if params[:public_events].present? && params[:private_events].present?
+      @events = Event.where(user_id: current_user.id)
+    elsif params[:public_events].present?
+      @events = Event.public_events.where(user_id: current_user.id)
+    elsif params[:private_events].present?
+      @events = Event.private_events.where(user_id: current_user.id)
+    else
+      params[:public_events] = '1' 
+      params[:private_events] = '1'
+      @events = Event.where(user_id: current_user.id)
+    end
+
+    if params[:specific_date].present?
+      specific_date = Date.parse(params[:specific_date])
+      @events = @events.where(user_id: current_user.id).where(init_date: specific_date)
+    elsif params[:start_date].present? && params[:end_date].present?
+      start_date = Date.parse(params[:start_date])
+      end_date = Date.parse(params[:end_date])
+
+      if start_date > end_date
+        @error_message = "Start date cannot be greater than end date."
+        render :index and return
+      else
+        @events = @events.where(user_id: current_user.id).where(init_date: start_date..end_date)
+      end
+    end
   end
 
   def public_events
@@ -57,7 +81,6 @@ class EventAdminController < ApplicationController
     @event.image.purge # Elimina la imagen adjunta
     redirect_to edit_event_path(@event), notice: 'Image deleted'
   end
-
 
   private
 

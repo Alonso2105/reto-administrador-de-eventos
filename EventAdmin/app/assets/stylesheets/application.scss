@@ -19,6 +19,14 @@
   }
 }
 
+.filter-content{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+
+
 .card-columns {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
