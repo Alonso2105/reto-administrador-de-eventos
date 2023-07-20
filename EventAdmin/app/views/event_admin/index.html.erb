@@ -26,7 +26,6 @@
       </label>
   </div>
 
-    <!-- Input fields for date filtering -->
   <div>
     <p class='filter-tag'>Specific Date:</p>
       <%= date_field_tag :specific_date, params[:specific_date] %>
@@ -45,7 +44,9 @@
 </div>
 
 <% if @error_message %>
-  <p><%= @error_message %></p>
+  <div class="error-message">
+    <p><%= @error_message %></p>
+  </div>
   <% else %>
   <div class="card-columns">
     <% @events.each do |event| %>
