@@ -3,12 +3,13 @@
 # class EventAdminController
 class EventAdminController < ApplicationController
   def index
+    @events = Event.where(user_id: current_user.id)
     if params[:public_events].present? && params[:private_events].present?
       @events = Event.where(user_id: current_user.id)
     elsif params[:public_events].present?
-      @events = Event.public_events.where(user_id: current_user.id)
+      @events = @events.public_events
     elsif params[:private_events].present?
-      @events = Event.private_events.where(user_id: current_user.id)
+      @events = @events.private_events
     else
       params[:public_events] = '1' 
       params[:private_events] = '1'
