@@ -3,9 +3,10 @@
 # class EventAdminController
 class EventAdminController < ApplicationController
   def index
-    @events = Event.where(user_id: current_user.id)
+    @events = Event.where(user_id: current_user.id).page(params[:page]).per(8)
+
     if params[:public_events].present? && params[:private_events].present?
-      @events = Event.where(user_id: current_user.id)
+      @events = Event.where(user_id: current_user.id).page(params[:page]).per(8)
     elsif params[:public_events].present?
       @events = @events.public_events
     elsif params[:private_events].present?
@@ -13,12 +14,12 @@ class EventAdminController < ApplicationController
     else
       params[:public_events] = '1' 
       params[:private_events] = '1'
-      @events = Event.where(user_id: current_user.id)
+      @events = Event.where(user_id: current_user.id).page(params[:page]).per(8)
     end
 
     if params[:specific_date].present?
       specific_date = Date.parse(params[:specific_date])
-      @events = @events.where(user_id: current_user.id).where(init_date: specific_date)
+      @events = Event.where(user_id: current_user.id).where(init_date: specific_date).page(params[:page]).per(8)
     elsif params[:start_date].present? && params[:end_date].present?
       start_date = Date.parse(params[:start_date])
       end_date = Date.parse(params[:end_date])
@@ -27,7 +28,7 @@ class EventAdminController < ApplicationController
         @error_message = "Start date cannot be greater than end date."
         render :index and return
       else
-        @events = @events.where(user_id: current_user.id).where(init_date: start_date..end_date)
+        @events = Event.where(user_id: current_user.id).where(init_date: start_date..end_date).page(params[:page]).per(8)
       end
     elsif (params[:start_date].present? && !params[:end_date].present?) ||
       (params[:end_date].present? && !params[:start_date].present?)
@@ -37,10 +38,10 @@ class EventAdminController < ApplicationController
   end
 
   def public_events
-    @events = Event.where(public: true)
+    @events = Event.where(public: true).page(params[:page]).per(8)
     if params[:specific_date].present?
       specific_date = Date.parse(params[:specific_date])
-      @events = @events.where(public: true).where(init_date: specific_date)
+      @events = Event.where(public: true).where(init_date: specific_date)
     elsif params[:start_date].present? && params[:end_date].present?
       start_date = Date.parse(params[:start_date])
       end_date = Date.parse(params[:end_date])
@@ -49,7 +50,7 @@ class EventAdminController < ApplicationController
         @error_message = "Start date cannot be greater than end date."
         render :public_events and return
       else
-        @events = @events.where(public: true).where(init_date: start_date..end_date)
+        @events = Event.where(public: true).where(init_date: start_date..end_date)
       end
     elsif (params[:start_date].present? && !params[:end_date].present?) ||
       (params[:end_date].present? && !params[:start_date].present?)
