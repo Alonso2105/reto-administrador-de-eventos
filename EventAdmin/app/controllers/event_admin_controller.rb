@@ -2,13 +2,60 @@
 
 # class EventAdminController
 class EventAdminController < ApplicationController
-  # @events = Event.where(user_id: current_user.id)
   def index
     @events = Event.where(user_id: current_user.id)
+    if params[:public_events].present? && params[:private_events].present?
+      @events = Event.where(user_id: current_user.id)
+    elsif params[:public_events].present?
+      @events = @events.public_events
+    elsif params[:private_events].present?
+      @events = @events.private_events
+    else
+      params[:public_events] = '1' 
+      params[:private_events] = '1'
+      @events = Event.where(user_id: current_user.id)
+    end
+
+    if params[:specific_date].present?
+      specific_date = Date.parse(params[:specific_date])
+      @events = @events.where(user_id: current_user.id).where(init_date: specific_date)
+    elsif params[:start_date].present? && params[:end_date].present?
+      start_date = Date.parse(params[:start_date])
+      end_date = Date.parse(params[:end_date])
+
+      if start_date > end_date
+        @error_message = "Start date cannot be greater than end date."
+        render :index and return
+      else
+        @events = @events.where(user_id: current_user.id).where(init_date: start_date..end_date)
+      end
+    elsif (params[:start_date].present? && !params[:end_date].present?) ||
+      (params[:end_date].present? && !params[:start_date].present?)
+      @error_message = "You must choose a valid date."
+      render :index and return
+    end
   end
 
   def public_events
     @events = Event.where(public: true)
+    if params[:specific_date].present?
+      specific_date = Date.parse(params[:specific_date])
+      @events = @events.where(public: true).where(init_date: specific_date)
+    elsif params[:start_date].present? && params[:end_date].present?
+      start_date = Date.parse(params[:start_date])
+      end_date = Date.parse(params[:end_date])
+
+      if start_date > end_date
+        @error_message = "Start date cannot be greater than end date."
+        render :public_events and return
+      else
+        @events = @events.where(public: true).where(init_date: start_date..end_date)
+      end
+    elsif (params[:start_date].present? && !params[:end_date].present?) ||
+      (params[:end_date].present? && !params[:start_date].present?)
+      @error_message = "You must choose a valid date."
+      render :public_events and return
+    end
   end
 
   def new
@@ -58,7 +105,6 @@ class EventAdminController < ApplicationController
     redirect_to edit_event_path(@event), notice: 'Image deleted'
   end
 
-
   private
 
   def event_params
@@ -68,4 +114,5 @@ class EventAdminController < ApplicationController
   def event_find
     @event = Event.find(params[:id])
   end
+
 end

@@ -21,7 +21,8 @@
     <div class="field">
       <%= f.label :init_date, class: "label" %>
       <div class="control">
-        <%= f.date_select :init_date, class: "input", required: true %>
+        <%= f.date_select :init_date, class: "input", selected: Date.today, 
+        :start_year => Date.current.year, required: true %>
       </div>
     </div>
 
