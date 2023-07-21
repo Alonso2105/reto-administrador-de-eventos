@@ -119,16 +119,20 @@ class EventAdminController < ApplicationController
       @events = @events.where(public: false)
     end
 
+    if params[:public_events].present? && params[:private_events].present?
+      @events = Event.where(user_id: current_user.id)
+    end
+
     if params[:specific_date].present?
       specific_date = Date.parse(params[:specific_date])
       @events = @events.where(init_date: specific_date)
-    elsif params[:start_date].present? && params[:end_date].present?
+    end
+
+    if params[:start_date].present? && params[:end_date].present?
       start_date = Date.parse(params[:start_date])
       end_date = Date.parse(params[:end_date])
 
-      # if start_date <= end_date
-        @events = @events.where(init_date: start_date..end_date.next_day)
-      # end
+      @events = @events.where(init_date: start_date..end_date.next_day)
     end
 
     respond_to do |format|
