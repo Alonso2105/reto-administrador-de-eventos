@@ -17,6 +17,9 @@ Rails.application.routes.draw do
   get '/events/new', to: 'event_admin#new', as: 'new_event'
   post '/events', to: 'event_admin#create'
 
+  # Importing to CSV
+  get '/events/export', to: 'event_admin#export'
+
   # Edit Event
   get '/events/:id/edit', to: 'event_admin#edit', as: 'edit_event'
   patch '/events/:id', to: 'event_admin#update', as: 'update_event'

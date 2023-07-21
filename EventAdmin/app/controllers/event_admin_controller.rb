@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'csv'
+
 # class EventAdminController
 class EventAdminController < ApplicationController
   def index
@@ -105,6 +107,44 @@ class EventAdminController < ApplicationController
     redirect_to edit_event_path(@event), notice: 'Image deleted'
   end
 
+  def export
+    @events = Event.where(user_id: current_user.id)
+
+    # Apply filtering based on the search parameters
+    if params[:public_events].present?
+      @events = @events.where(public: true)
+    end
+
+    if params[:private_events].present?
+      @events = @events.where(public: false)
+    end
+
+    if params[:specific_date].present?
+      specific_date = Date.parse(params[:specific_date])
+      @events = @events.where(init_date: specific_date)
+    elsif params[:start_date].present? && params[:end_date].present?
+      start_date = Date.parse(params[:start_date])
+      end_date = Date.parse(params[:end_date])
+
+      # if start_date <= end_date
+        @events = @events.where(init_date: start_date..end_date.next_day)
+      # end
+    end
+
+    respond_to do |format|
+      format.csv do
+        csv_data = CSV.generate(headers: true) do |csv|
+          csv << %w[Title Description Init_Date Cost Location Public]
+          @events.each do |event|
+            csv << [event.title, event.description, event.init_date, event.cost, event.location, event.public]
+          end
+        end
+
+        send_data csv_data, filename: "events.csv"
+      end
+    end
+  end
+
   private
 
   def event_params
@@ -115,4 +155,7 @@ class EventAdminController < ApplicationController
     @event = Event.find(params[:id])
   end
 
+  def permitted_params
+    params.permit(:public_events, :private_events, :specific_date, :start_date, :end_date, :format)
+  end
 end
