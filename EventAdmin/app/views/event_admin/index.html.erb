@@ -41,6 +41,10 @@
     <%= submit_tag 'Filter' %>
   </div>
   <% end %>
+  <div>
+    <%= link_to "Export CSV", events_export_path(public_events: params[:public_events], private_events: params[:private_events], specific_date: params[:specific_date], start_date: params[:start_date], end_date: params[:end_date], format: :csv) %>
+
+  </div>
 </div>
 
 <% if @error_message %>
